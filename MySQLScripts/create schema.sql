@@ -21,8 +21,6 @@ CREATE TABLE IF NOT EXISTS `imageUploader`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(31) NOT NULL,
   `password` VARCHAR(127) NOT NULL,
-  `token` VARCHAR(127) NULL,
-  `token_expireDate` DATETIME NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
 ENGINE = InnoDB;

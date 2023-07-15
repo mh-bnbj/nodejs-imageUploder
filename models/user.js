@@ -20,12 +20,6 @@ const User = db.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        token: {
-            type: DataTypes.STRING,
-        },
-        token_expireDate: {
-            type: DataTypes.DATE,
-        },
     },
     {
         tableName: 'user',
