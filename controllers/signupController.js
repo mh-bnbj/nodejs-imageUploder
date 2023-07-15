@@ -5,6 +5,7 @@ const get = (req, res) => {
     res.render('signup', {
         flash: req.flash(),
         errors: [],
+        URL: process.env.URL,
     })
 }
 
@@ -14,6 +15,7 @@ const post = async (req, res) => {
         res.render('signup', {
             flash: req.flash(),
             errors: errors.array(),
+            URL: process.env.URL,
         })
         return
     }
@@ -29,6 +31,7 @@ const post = async (req, res) => {
         res.render('signup', {
             flash: req.flash(),
             errors: [],
+            URL: process.env.URL,
         })
         return
     }

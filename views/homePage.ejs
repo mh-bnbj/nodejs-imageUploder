@@ -2,30 +2,191 @@
     <head>
         <%- include('layout/head'); -%>
         <link href="/assets/css/style.css" rel="stylesheet" />
-        <script src="http://127.0.0.1:4000/assets/js/homepage.js"></script>
+        <script src="<%=URL%>/assets/js/homepage.js"></script>
     </head>
     <body>
-        <%- include('layout/header'); -%>
+        <div aria-live="polite" aria-atomic="true" class="position-relative">
+            <div class="toast-container position-fixed end-0 p-3" style="top: 10%; z-index: -1">
+                <!-- Then put toasts within -->
+                <div class="toast border border-success border-2" id="toast-upload-successful" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header px-3">
+                        <h5 class="me-auto text-success">successful</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body p-3">upload successfully done</div>
+                    <div class="progress" style="height: 5px">
+                        <div
+                            class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+                            role="progressbar"
+                            style="width: 0"
+                            aria-valuenow="0"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                        ></div>
+                    </div>
+                </div>
+
+                <div class="toast border border-danger border-2" id="toast-upload-failed" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header px-3">
+                        <h5 class="me-auto text-danger">error</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body p-3">upload failed</div>
+                    <div class="progress" style="height: 5px">
+                        <div
+                            class="progress-bar progress-bar-striped bg-danger progress-bar-animated"
+                            role="progressbar"
+                            style="width: 0"
+                            aria-valuenow="0"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                        ></div>
+                    </div>
+                </div>
+
+                <div class="toast border border-success border-2" id="toast-delete-successful" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header px-3">
+                        <h5 class="me-auto text-success">successful</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body p-3">Delete successfully done</div>
+                    <div class="progress" style="height: 5px">
+                        <div
+                            class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+                            role="progressbar"
+                            style="width: 0"
+                            aria-valuenow="0"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                        ></div>
+                    </div>
+                </div>
+
+                <div class="toast border border-danger border-2" id="toast-delete-failed" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header px-3">
+                        <h5 class="me-auto text-danger">error</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body p-3">Delete failed</div>
+                    <div class="progress" style="height: 5px">
+                        <div
+                            class="progress-bar progress-bar-striped bg-danger progress-bar-animated"
+                            role="progressbar"
+                            style="width: 0"
+                            aria-valuenow="0"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <header>
+            <nav class="navbar navbar-expand navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <div class="navbar-nav w-50 order-1">
+                        <button
+                            type="button"
+                            class="nav-item nav-link btn-link btn"
+                            aria-current="page"
+                            data-bs-toggle="modal"
+                            data-bs-target="#uploadModal"
+                        >
+                            Upload image
+                        </button>
+                    </div>
+                    <!-- Modal -->
+                    <div
+                        class="modal fade"
+                        id="uploadModal"
+                        data-bs-keyboard="false"
+                        tabindex="-1"
+                        aria-labelledby="staticBackdropLabel"
+                        aria-hidden="true"
+                    >
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- <div class="modal-header border-0">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div> -->
+                                <div class="modal-body d-flex flex-column">
+                                    <div class="w-100 d-flex justify-content-end">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <h2 class="modal-title text-center" id="staticBackdropLabel">Upload image</h2>
+                                    <div class="error-container mt-3"></div>
+                                    <form id="uploadForm" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
+                                        <input
+                                            name="image"
+                                            type="file"
+                                            id="inputName"
+                                            class="form-control mt-3"
+                                            placeholder="Title"
+                                            required=""
+                                            autofocus=""
+                                            autocomplete="off"
+                                        />
+                                        <br />
+                                        <input
+                                            name="title"
+                                            type="text"
+                                            id="inputName"
+                                            class="form-control"
+                                            placeholder="Title"
+                                            required=""
+                                            autofocus=""
+                                            autocomplete="off"
+                                        />
+                                    </form>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center border-0">
+                                    <button type="button" class="btn btn-lg btn-outline-dark" onclick="uploadImage(this)" user-id="<%=userId%>">
+                                        UPLAOD
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collapse navbar-collapse w-100 order-2">
+                        <div class="navbar-nav mx-auto w-100">
+                            <form class="nav-item d-flex mx-auto mt-2 mb-2 w-75" action="/search">
+                                <input class="form-control me-2 w-75" name="q" type="search" placeholder="Search" aria-label="Search" />
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="navbar-nav w-50 order-3 justify-content-end">
+                        <a class="nav-item nav-link" href="/logout">log out</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
         <main>
             <h2 class="text-center mt-2"><%= userName %> Images</h2>
             <hr class="w-75 mx-auto" />
-            <div class="w-100 d-flex justify-content-around flex-wrap">
+            <div class="w-100 d-flex justify-content-around flex-wrap" id="imgae-container">
                 <% images.forEach((image)=>{ %>
                 <div class="card mx-1 my-3 p-2 pb-0" style="width: 23%">
                     <!-- <img class="card-img-top" src="https://robohash.org/quidemfugitdolor.jpg?size=320x320&amp;set=set1" alt="Card image" style="width:100%;aspect-ratio: 4/3;border-radius:  0.5rem 0.5rem 0 0;"> -->
-                    <a class="card-img-top overflow-hidden" target="_blank" href="http://127.0.0.1:4000/uploads/<%=image.href%>">
-                        <img src="http://127.0.0.1:4000/uploads/<%=image.href%>" alt="Card image" />
+                    <a class="card-img-top overflow-hidden" target="_blank" href="<%=URL%>/uploads/<%=image.href%>">
+                        <img src="<%=URL%>/uploads/<%=image.href%>" alt="Card image" />
                     </a>
                     <div class="card-body">
-                        <p class="text-center fs-4"><%= image.title %></p>
+                        <p class="text-left fw-bold" style="font-size: 0.8rem; margin-top: -10px; margin-left: -10px">
+                            <%= (new Date(image.created_date)).toLocaleString("fa-fr") %>
+                        </p>
+                        <p class="text-center fs-4 mt-1"><%= image.title %></p>
                         <div class="d-flex justify-content-between">
-                            <a href="#" class="btn btn-danger mt-2">Delete</a>
+                            <button type="button" class="btn btn-danger mt-2" value="<%=image.id%>" onclick="deleteImage(this)">Delete</button>
 
                             <button
                                 type="button"
                                 class="btn btn-primary mt-2 position-relative"
-                                value="http://127.0.0.1:4000/uploads/<%=image.href%>"
-                                onclick="copyToClipboard('http://127.0.0.1:4000/uploads/<%=image.href%>' , this)"
+                                value="<%=URL%>/uploads/<%=image.href%>"
+                                onclick="copyToClipboard('<%=URL%>/uploads/<%=image.href%>' , this)"
                                 onmouseout="tooltipLeave(this)"
                             >
                                 <span class="tooltiptext">Copy to clipboard</span>
@@ -57,4 +218,10 @@
         </main>
         <%- include('layout/footer'); -%>
     </body>
+    <script>
+        if (sessionStorage.getItem('create') === 'true') {
+            sessionStorage.setItem('create', '')
+            document.querySelector('#imgae-container>.card').style.backgroundColor = 'rgb(200,255,200)'
+        }
+    </script>
 </html>

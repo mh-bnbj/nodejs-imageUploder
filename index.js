@@ -12,7 +12,7 @@ const session = require('express-session')
 const passport = require('passport')
 
 const app = express()
-const PORT = 4000
+const PORT = process.env.PORT
 
 // add passport codes
 require('./helpers/passport')
